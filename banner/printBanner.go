@@ -103,37 +103,31 @@ func centerAlign(text string, width int) string {
 }
 
 // Justify-align the text
-// Justify-align the text
 func justifyAlign(text string, width int) string {
 	words := strings.Fields(text)
 	if len(words) == 1 {
-		return words[0]
+		return words[0] + strings.Repeat(" ", width-len(words[0]))
 	}
 
-	// Calculate total length of words excluding spaces
-	totalChars := 0
+	// Calculate the total length of all words without spaces
+	totalWordsLength := 0
 	for _, word := range words {
-		totalChars += len(word)
+		totalWordsLength += len(word)
 	}
 
-	// Calculate total number of spaces needed
-	totalSpaces := width - totalChars
-	if totalSpaces <= 0 {
-		return text
-	}
-
-	// Calculate spaces between each word
-	spacesBetweenWords := totalSpaces / (len(words) - 1)
-	extraSpaces := totalSpaces % (len(words) - 1)
+	// Calculate total spaces needed to fill the width
+	spacesNeeded := width - totalWordsLength
+	spacesBetweenWords := spacesNeeded / (len(words) - 1)
+	extraSpaces := spacesNeeded % (len(words) - 1)
 
 	var result strings.Builder
 	for i, word := range words {
 		result.WriteString(word)
 		if i < len(words)-1 {
-			// Add spaces between words
 			spaces := spacesBetweenWords
-			if i < extraSpaces {
-				spaces++ // Distribute extra spaces evenly
+			if extraSpaces > 0 {
+				spaces++
+				extraSpaces--
 			}
 			result.WriteString(strings.Repeat(" ", spaces))
 		}

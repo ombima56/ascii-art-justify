@@ -17,13 +17,13 @@ func main() {
 
 	// Validate the alignment flag
 	if *alignment != "left" && *alignment != "right" && *alignment != "center" && *alignment != "justify" {
-		printUsage()
+		Ascii.PrintErr()
 		return
 	}
 
 	// Check for the correct number of arguments.
 	if len(flag.Args()) < 1 || len(flag.Args()) > 2 {
-		printUsage()
+		Ascii.PrintErr()
 		return
 	}
 
@@ -62,10 +62,4 @@ func main() {
 			Ascii.PrintBanner(word, *alignment)
 		}
 	}
-}
-
-// printUsage prints the usage message
-func printUsage() {
-	fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER]")
-	fmt.Println("Example: go run . --align=right something standard")
 }
